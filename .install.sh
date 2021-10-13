@@ -2,7 +2,7 @@
 myip=$(hostname -I | awk '{print $1}')
 randstr=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c10)
 randpass=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c6)
-function EPHEMERAL_PORT() {
+function EPHEMERAL_PORT {
     LOW_BOUND=49152
     RANGE=16384
     while true; do
