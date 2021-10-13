@@ -27,6 +27,7 @@ apt update && apt install -y kali-desktop-xfce tightvncserver novnc;
 cp /root/sources.list.bak /etc/apt/sources.list -r;
 else yum groupinstall xfce -y && yum install tigervnc-server novnc -y;
 fi;
+mkdir -p ~/.vnc;
 echo $randpass | vncpasswd -f >~/.vnc/passwd;
 echo xfce4-session >~/.vnc/xstartup;
 vncserver :55 -localhost;
