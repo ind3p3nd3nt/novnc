@@ -25,9 +25,9 @@ cp /root/sources.list.bak /etc/apt/sources.list -r;
 else yum groupinstall xfce -y && yum install tigervnc-server novnc -y;
 fi;
 mkdir -p ~/.vnc;
-echo $randpass | vncpasswd -f;
+echo $randpass | vncpasswd -f
 echo xfce4-session >~/.vnc/xstartup;
 vncserver :55 -localhost;
-if [ -f /usr/bin/apt ]; then /usr/share/novnc/utils/launch.sh --listen $randport --vnc localhost:5955& fi;
-if [ -f /usr/bin/yum ]; then novnc_server --listen $randport --vnc localhost:5955 --web /usr/share/novnc/& fi;
+if [ -f /usr/bin/apt ]; then /usr/share/novnc/utils/launch.sh --listen $randport --vnc localhost:5955; fi;
+if [ -f /usr/bin/yum ]; then novnc_server --listen $randport --vnc localhost:5955 --web /usr/share/novnc/vnc.html; fi;
 echo "http://${myip}:${randport}/vnc.html pass: $randpass"
