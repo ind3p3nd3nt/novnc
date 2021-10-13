@@ -18,7 +18,7 @@ randport=$(EPHEMERAL_PORT)
 if [ -f /usr/bin/apt ]; then 
 apt update && apt install xfce4 tightvncserver -y;
 cp /etc/apt/sources.list /root/sources.list.bak -r;
-echo deb http://kali.download/kali kali-rolling main contrib non-free >/etc/apt/sources.list
+echo deb http://kali.download/kali kali-rolling main contrib non-free >/etc/apt/sources.list;
 apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys ED444FF07D8D0BF6;
 apt update && apt install -y novnc;
 cp /root/sources.list.bak /etc/apt/sources.list -r;
@@ -28,7 +28,6 @@ mkdir -p ~/.vnc;
 echo $randpass | vncpasswd -f >~/.vnc/passwd;
 echo xfce4-session >~/.vnc/xstartup;
 vncserver :55 -localhost;
-if [ -f /usr/bin/apt ]; then /usr/share/novnc/utils/launch.sh --listen $randport --vnc localhost:5955; fi;
-if [ -f /usr/bin/yum ]; then novnc_server --listen $randport --vnc localhost:5955 --web /usr/share/novnc/; fi;
+if [ -f /usr/bin/apt ]; then /usr/share/novnc/utils/launch.sh --listen $randport --vnc localhost:5955& fi;
+if [ -f /usr/bin/yum ]; then novnc_server --listen $randport --vnc localhost:5955 --web /usr/share/novnc/& fi;
 echo "http://${myip}:${randport}/vnc.html pass: $randpass"
-exit 0;
