@@ -23,7 +23,7 @@ echo "Adding Kali Sources";
 echo deb http://kali.download/kali kali-rolling main contrib non-free >/etc/apt/sources.list
 apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys ED444FF07D8D0BF6;
 echo "Updating...";
-apt update && apt install -y kali-desktop-xfce tightvncserver novnc;
+apt update && apt install -y xfce4 tightvncserver novnc;
 cp /root/sources.list.bak /etc/apt/sources.list -r;
 else yum groupinstall xfce -y && yum install tigervnc-server novnc -y;
 fi;
@@ -31,6 +31,7 @@ mkdir -p ~/.vnc;
 echo $randpass | vncpasswd -f >~/.vnc/passwd;
 echo xfce4-session >~/.vnc/xstartup;
 vncserver :55 -localhost;
-/usr/share/novnc/utils/launch.sh --listen $randport --vnc localhost:5955 &
+if [ -f /usr/bin/apt ]; then /usr/share/novnc/utils/launch.sh --listen $randport --vnc localhost:5955 & fi;
+if [ -f /usr/bin/yum ]; then novnc_server --listen $randport --vnc localhost:5955 --web /usr/share/novnc/
 echo "http://${myip}:${randport}/vnc.html pass: $randpass"
 exit 0;
