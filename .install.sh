@@ -26,7 +26,7 @@ else yum groupinstall xfce -y && yum install tigervnc-server expect novnc -y;
 fi;
 mkdir -p ~/.vnc ;
 /usr/bin/expect <<EOF
-spawn /usr/bin/vncpasswd root
+spawn /usr/bin/vncserver :55 -localhost
 expect "Password:"
 send "$randpass\r"
 expect "Verify:"
@@ -36,7 +36,7 @@ send "n\r"
 expect eof
 exit
 EOF
-vncserver :55 -localhost && DISPLAY=:55 xfce4-session &
+DISPLAY=:55 xfce4-session &
 if [ -f /usr/bin/apt ]; then /usr/share/novnc/utils/launch.sh --listen $randport --vnc localhost:5955 & fi;
 if [ -f /usr/bin/yum ]; then novnc_server --listen $randport --vnc localhost:5955 --web /usr/share/novnc & fi;
 echo "http://${myip}:${randport}/vnc.html pass: $randpass" >~/.secret
