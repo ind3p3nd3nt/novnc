@@ -16,13 +16,13 @@ function EPHEMERAL_PORT() {
 }
 randport=$(EPHEMERAL_PORT)
 if [ -f /usr/bin/apt ]; then 
-apt update && apt install xfce4 tightvncserver -y;
+apt update && apt install xfce4 tightvncserver expect -y;
 cp /etc/apt/sources.list /root/sources.list.bak -r;
 echo deb http://kali.download/kali kali-rolling main contrib non-free >/etc/apt/sources.list;
 apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys ED444FF07D8D0BF6;
 apt update && apt install -y novnc;
 cp /root/sources.list.bak /etc/apt/sources.list -r;
-else yum groupinstall xfce -y && yum install tigervnc-server novnc -y;
+else yum groupinstall xfce -y && yum install tigervnc-server expect novnc -y;
 fi;
 mkdir -p ~/.vnc ;
 /usr/bin/expect <<EOF
