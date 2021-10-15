@@ -24,12 +24,8 @@ echo deb http://kali.download/kali kali-rolling main contrib non-free >/etc/apt/
 apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys ED444FF07D8D0BF6;
 apt update && apt install -y novnc;
 cp /root/sources.list.bak /etc/apt/sources.list -r;
-else 
-yum groupinstall xfce -y 
-yum install tigervnc-server expect novnc -y;
-fi;
+else yum groupinstall xfce -y && yum install tigervnc-server expect novnc -y; fi;
 if [ ! -f ~/.vnc/passwd ]; then
-mkdir -p ~/.vnc
 /usr/bin/expect <<EOF
 spawn /usr/bin/vncserver :55 -localhost $XSTARTUP
 expect "Password:"
