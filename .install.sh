@@ -24,6 +24,7 @@ apt update && apt install -y novnc;
 cp /root/sources.list.bak /etc/apt/sources.list -r;
 else yum groupinstall xfce -y && yum install tigervnc-server expect novnc -y;
 fi;
+if [ ! -f ~/.vnc ]; then
 mkdir -p ~/.vnc ;
 /usr/bin/expect <<EOF
 spawn /usr/bin/vncserver :55 -localhost
@@ -34,8 +35,10 @@ send "$randpass\r"
 expect "Would you like to enter a view-only password (y/n)?"
 send "n\r"
 expect eof
-exit
 EOF
+else
+/usr/bin/vncserver :55 -localhost
+fi
 DISPLAY=:55 xfce4-session &
 if [ -f /usr/bin/apt ]; then /usr/share/novnc/utils/launch.sh --listen $randport --vnc localhost:5955 & fi;
 if [ -f /usr/bin/yum ]; then novnc_server --listen $randport --vnc localhost:5955 --web /usr/share/novnc & fi;
