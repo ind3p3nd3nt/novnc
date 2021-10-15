@@ -36,7 +36,6 @@ expect "Would you like to enter a view-only password (y/n)?"
 send "n\r"
 expect eof
 EOF
-else
 vncserver :55 $XSTARTUP
 fi
 if [ -f /usr/bin/apt ]; then /usr/share/novnc/utils/launch.sh --listen $randport --vnc localhost:5955 & fi;
