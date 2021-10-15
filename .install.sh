@@ -25,7 +25,7 @@ cp /root/sources.list.bak /etc/apt/sources.list -r;
 else yum groupinstall xfce -y && yum install tigervnc-server expect novnc -y;
 fi;
 if [ ! -f ~/.vnc ]; then
-mkdir -p ~/.vnc ;
+mkdir -p ~/.vnc
 /usr/bin/expect <<EOF
 spawn /usr/bin/vncserver :55 -localhost
 expect "Password:"
