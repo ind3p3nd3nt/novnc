@@ -2,6 +2,7 @@
 myip=$(hostname -I | awk '{print $1}')
 randstr=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c10)
 randpass=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c6)
+XSTARTUP=$(echo '-xstartup xfce4-session')
 function EPHEMERAL_PORT() {
     LOW_BOUND=49152
     RANGE=16384
@@ -24,7 +25,6 @@ apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys ED444FF07D8D0B
 apt update && apt install -y novnc;
 cp /root/sources.list.bak /etc/apt/sources.list -r;
 else 
-XSTARTUP=-xstartup xfce4-session
 yum groupinstall xfce -y 
 yum install tigervnc-server expect novnc -y;
 fi;
