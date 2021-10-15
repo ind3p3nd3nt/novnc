@@ -46,3 +46,4 @@ echo "You can now go to http://${myip}:${randport}/vnc.html password: $randpass"
 DISPLAY=:55 xfce4-session
 sleep 4
 cat ~/.secret
+exit
