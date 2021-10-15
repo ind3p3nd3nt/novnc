@@ -45,5 +45,7 @@ vncserver :55 -localhost $XSTARTUP
 fi
 if [ -f /usr/bin/apt ]; then /usr/share/novnc/utils/launch.sh --listen $randport --vnc localhost:5955 && DISPLAY=:55 xfce4-session & fi;
 if [ -f /usr/bin/yum ]; then novnc_server --listen $randport --vnc localhost:5955 --web /usr/share/novnc & fi;
-echo "http://${myip}:${randport}/vnc.html pass: $randpass" >~/.secret
+echo "You can now go to http://${myip}:${randport}/vnc.html password: $randpass" >~/.secret
+sleep 4
 cat ~/.secret
+exit
