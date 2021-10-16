@@ -28,6 +28,7 @@ else yum groupinstall xfce -y && yum install tigervnc-server expect novnc -y; fi
 rm -rf /tmp/.X* ;
 vncserver -kill :55
 if [ ! -f ~/.vnc/passwd ]; then
+rm -rf ~/.secret
 /usr/bin/expect <<EOF
 spawn /usr/bin/vncserver :55 $XSTARTUP
 expect "Password:"
