@@ -25,8 +25,8 @@ apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys ED444FF07D8D0B
 apt update && apt install -y novnc;
 cp /root/sources.list.bak /etc/apt/sources.list -r;
 else yum groupinstall xfce -y && yum install tigervnc-server expect novnc -y; fi;
-rm -rf /tmp/.X* ;
 vncserver -kill :55
+rm -rf /tmp/.X*
 if [ ! -f ~/.vnc/passwd ]; then
 rm -rf ~/.secret
 /usr/bin/expect <<EOF
