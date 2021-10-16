@@ -3,6 +3,7 @@ myip=$(hostname -I | awk '{print $1}')
 randstr=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c10)
 randpass=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c6)
 XSTARTUP=$(echo '-xstartup xfce4-session')
+LOCALHOST=$(echo '-localhost')
 function EPHEMERAL_PORT() {
     LOW_BOUND=49152
     RANGE=16384
@@ -18,6 +19,7 @@ function EPHEMERAL_PORT() {
 randport=$(EPHEMERAL_PORT)
 if [ -f /usr/bin/apt ]; then 
 unset XSTARTUP
+unset LOCALHOST
 apt update && apt install xfce4 tightvncserver expect snapd -y;
 snap install novnc;
 else yum groupinstall xfce -y && yum install tigervnc-server expect novnc -y; fi;
@@ -26,7 +28,7 @@ rm -rf /tmp/.X*
 if [ ! -f ~/.vnc/passwd ]; then
 rm -rf ~/.secret
 /usr/bin/expect <<EOF
-spawn /usr/bin/vncserver :55 $XSTARTUP
+spawn /usr/bin/vncserver :55 $LOCALHOST $XSTARTUP 
 expect "Password:"
 send "$randpass\r"
 expect "Verify:"
@@ -36,7 +38,7 @@ send "n\r"
 expect eof
 EOF
 fi
-vncserver :55 $XSTARTUP &
+vncserver :55 $LOCALHOST $XSTARTUP &
 if [ -f /usr/bin/apt ]; then /usr/share/novnc/utils/launch.sh --listen $randport --vnc localhost:5955 & fi;
 if [ -f /usr/bin/yum ]; then novnc_server --listen $randport --vnc localhost:5955 --web /usr/share/novnc & fi;
 if [ ! -f ~/.secret ]; then echo "You can now go to http://${myip}:${randport}/vnc.html password: $randpass" >~/.secret ; fi;
