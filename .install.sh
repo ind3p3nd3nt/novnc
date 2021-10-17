@@ -20,7 +20,7 @@ randport=$(EPHEMERAL_PORT)
 if [ -f /usr/bin/apt ]; then 
 unset XSTARTUP
 unset LOCALHOST
-apt update && apt install xfce4 xorg tightvncserver expect novnc -y;
+apt update && apt install xfce4 dbus-x11 xorg tightvncserver expect novnc -y;
 else yum groupinstall xfce -y && yum install tigervnc-server expect novnc -y; fi;
 vncserver -kill :55
 rm -rf /tmp/.X*
