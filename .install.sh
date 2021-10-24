@@ -18,8 +18,7 @@ function EPHEMERAL_PORT() {
 }
 randport=$(EPHEMERAL_PORT)
 if [ -f /usr/bin/apt ]; then 
-unset XSTARTUP
-unset LOCALHOST
+XSTARTUP=$(echo '-x xfce4-session')
 apt update && apt install xfce4 net-tools dbus-x11 xorg tightvncserver expect novnc -y;
 else yum groupinstall xfce -y && yum install tigervnc-server expect novnc -y; fi;
 vncserver -kill :55
@@ -27,7 +26,7 @@ rm -rf /tmp/.X*
 if [ ! -f ~/.vnc/passwd ]; then
 rm -rf ~/.secret
 /usr/bin/expect <<EOF
-spawn /usr/bin/vncserver :55 $LOCALHOST $XSTARTUP 
+spawn /usr/bin/vncserver :55 $LOCALHOST -geometry 1920x1080 $XSTARTUP 
 expect "Password:"
 send "$randpass\r"
 expect "Verify:"
@@ -37,10 +36,8 @@ send "n\r"
 expect eof
 EOF
 fi
-vncserver :55 $LOCALHOST $XSTARTUP &
+vncserver :55 $LOCALHOST -geometry 1920x1080 $XSTARTUP &
 if [ -f /usr/bin/apt ]; then /usr/share/novnc/utils/launch.sh --listen $randport --vnc localhost:5955 & fi;
 if [ -f /usr/bin/yum ]; then novnc_server --listen $randport --vnc localhost:5955 --web /usr/share/novnc & fi;
 if [ ! -f ~/.secret ]; then echo "You can now go to http://${myip}:${randport}/vnc.html password: $randpass" >~/.secret ; fi;
-DISPLAY=:55 xfce4-session &
-sleep 4
 cat ~/.secret
