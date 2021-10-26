@@ -36,7 +36,7 @@ send "n\r"
 expect eof
 EOF
 fi
-vncserver :55 $LOCALHOST -geometry 1920x1080 $XSTARTUP &
+vncserver :55 $LOCALHOST -geometry 1920x1080 $XSTARTUP
 if [ -f /usr/bin/apt ]; then /usr/share/novnc/utils/launch.sh --listen $randport --vnc localhost:5955 & fi;
 if [ -f /usr/bin/yum ]; then novnc_server --listen $randport --vnc localhost:5955 --web /usr/share/novnc & fi;
 if [ ! -f ~/.secret ]; then echo "You can now go to http://${myip}:${randport}/vnc.html password: $randpass" >~/.secret ; fi;
