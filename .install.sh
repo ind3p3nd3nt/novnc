@@ -20,7 +20,7 @@ randport=$(EPHEMERAL_PORT)
 if [ -f /usr/bin/apt ]; then 
 XSTARTUP=$(echo '-x xfce4-session')
 apt update && apt install xfce4 net-tools dbus-x11 xorg tightvncserver expect novnc -y;
-else yum groupinstall xfce -y && yum install tigervnc-server expect novnc -y; fi;
+else yum install centos-release epel-release -y && yum update -y && yum groupinstall xfce -y && yum install tigervnc-server expect novnc -y; fi;
 vncserver -kill :55
 rm -rf /tmp/.X*
 if [ ! -f ~/.vnc/passwd ]; then
